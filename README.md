@@ -1,2 +1,36 @@
-# Network-Intrusion-Project
-This project implements an autoencoder-based anomaly detection system designed to detect anomalies in black-box attack datasets. The approach uses  statistical and temporal features to improve detection accuracy and evaluates the model on both benign and attack data for reliable performance
+# Autoencoder-Based Detection of Black-Box Attacks in On-Device Machine Learning
+
+## 1. Overview
+
+This project explores how autoencoders can be used to detect black-box probing attacks on On-Device Machine Learning (ODML) systems. The goal is to identify malicious query sequences that attempt to steal or exploit the model by analyzing output behavior over time. We developed a lightweight, anomaly-based defense mechanism that learns patterns of benign query activity and flags sequences that deviate from this behavior.
+
+This repository includes implementations for both ImageNet and CIFAR-10 classification models, including adversarial testing scenarios. It also features a Variational Autoencoder (VAE) designed to generate synthetic benign samples to support training in data-limited environments.
+
+Each script has its required dependencies listed at the top of the file. Make sure to install them in your environment before running.
+
+Download the datasets (benign and attack sequences) here:  
+[Insert Dropbox link here]  
+Place the downloaded files in a `data/` folder and update the dataset paths in the scripts as needed.
+
+## 2. ImageNet & CIFAR-10 Autoencoders
+
+Both ImageNet and CIFAR-10 pipelines use the same medium-term convolutional autoencoder (AE) architecture, designed to detect anomalies in sequences of model queries. The AE monitors 600-query sequences and is trained to reconstruct benign behavior. High reconstruction error or stability deviations signal potential attack activity.
+
+Each AE script performs the following:
+- Preprocessing and sliding window sequence generation
+- Training of the autoencoder model
+- Evaluation against multiple decision-based black-box attacks (e.g., HSJA, NES, Square, etc.)
+- An adversarial injection test that simulates hidden attacks within longer benign query streams
+
+Scripts included:
+- `ImageNet_AE.py` – Full AE pipeline for ImageNet
+- `CIFAR10_AE.py` – Full AE pipeline for CIFAR-10
+
+## 3. ImageNet VAE for Synthetic Data
+
+To address situations where real benign query data is limited or sensitive, we implemented a Variational Autoencoder (VAE) for the ImageNet pipeline. This VAE is trained solely on real benign queries and generates synthetic samples that preserve the statistical characteristics of actual queries without revealing private data.
+
+The generated synthetic data can be used to train the AE while preserving the original real dataset for validation/testing only. This improves generalization while reducing overfitting to limited real samples.
+
+Script included:
+- `ImageNet_VAE.py` – Trains a VAE and generates synthetic benign query samples
