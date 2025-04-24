@@ -1,7 +1,7 @@
 # Securing On-Device AI From Model Probing Attacks Using Autoencoder-Bsed Anomaly Detection
 ## 1. Overview
 
-This project shows how autoencoders can be used to detect black-box probing attacks on On-Device Machine Learning (ODML) systems. The goal is to identify malicious query sequences that attempt to steal or exploit the model by analyzing output behavior over time. We developed a lightweight, anomaly-based defense mechanism that learns patterns of benign query activity and flags sequences that deviate from this behavior.
+This project shows how autoencoders can be used to detect black-box probing attacks on On-Device Machine Learning (ODML) systems. We developed a lightweight, anomaly-based defense mechanism that learns patterns of benign query activity and flags sequences that deviate from this behavior.
 
 This repository includes implementations for both ImageNet and CIFAR-10 classification models, including adversarial testing scenarios. It also features a Variational Autoencoder (VAE) designed to generate synthetic benign samples to support training for ImageNet.
 
