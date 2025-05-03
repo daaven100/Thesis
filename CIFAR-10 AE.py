@@ -239,8 +239,8 @@ test_reconstructed = medium_ae.predict(test_sequences)
 test_errors = calculate_reconstruction_errors(test_sequences, test_reconstructed)
 thresholds = {m: np.mean(v) + 2.5 * np.std(v) for m, v in test_errors.items()}. # <--- Sensitivity can be customized
 
-for atk in ["surfree", "nes"]: # <--- Can be changed for more or less attacks
-    df = load_data_from_gcs(bucket_name, files[atk])
+for atk in ["surfree", "nes"]: # <--- Can be changed to test more or less attacks
+    df = load_data_local(files[atk])
     seqs = extract_features_for_medium_ae(df)
     recon = medium_ae.predict(seqs)
     errs = calculate_reconstruction_errors(seqs, recon)
@@ -323,7 +323,7 @@ while len(injected_attacks) < num_attacks_to_inject and attempts < 30:
     attempts += 1
 
     try:
-        df = load_data_from_gcs(bucket_name, files[atk])
+        df = load_data_local(files[atk])
         attack_raw = extract_features_for_medium_ae(df)[:seq_len]
         strategy = random.choice(["fragmented", "stretched", "ramped", "hybrid", "spike"])
 
