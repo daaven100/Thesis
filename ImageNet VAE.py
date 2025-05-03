@@ -27,7 +27,7 @@ from tensorflow.keras.losses import mse
 from tensorflow.keras import backend as K
 
 # Load the original benign dataset locally
-data = pd.read_csv("")  # <-- Insert your dataset path here
+data = pd.read_csv("")  # <-- Insert path to ImageNet benign dataset
 
 # Select relevant features
 features = ['Margin Loss', 'SortedList_Second_Element', 'SortedList_First_Element']
@@ -178,10 +178,7 @@ latent_samples = np.random.normal(size=(num_samples, latent_dim))
 synthetic_features = np.clip(decoder.predict(latent_samples), 0, None)
 
 # Convert to DataFrame with 3 features
-synthetic_data = pd.DataFrame(synthetic_features, columns=["Margin Loss", "SortedList_Second_Element", "SortedList_First_Element"]) # <-- Insert your dataset path here
-
-# Load the original benign dataset
-data = pd.read_csv(f'gs://{bucket_name}/{files["benign"]}')
+synthetic_data = pd.DataFrame(synthetic_features, columns=["Margin Loss", "SortedList_Second_Element", "SortedList_First_Element"]) 
 
 # Required features
 features = ['Margin Loss', 'SortedList_Second_Element', 'SortedList_First_Element']
