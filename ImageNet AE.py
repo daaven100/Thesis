@@ -233,7 +233,7 @@ with open("AE_threshold.pkl", "wb") as f:
     pickle.dump(thresholds, f)
 
 for atk in ["square", "nes"]:  # <--- Can be changed to evaluate more or less attacks
-    df = load_data_from_gcs(bucket_name, files[atk])
+    df = load_data_local(files[atk])
     seqs = extract_features_for_medium_ae(df)
     recon = medium_ae.predict(seqs)
     errs = calculate_reconstruction_errors(seqs, recon)
@@ -316,7 +316,7 @@ while len(injected_attacks) < num_attacks_to_inject and attempts < 30:
     attempts += 1
 
     try:
-        df = load_data_from_gcs(bucket_name, files[atk])
+        df = load_data_local(files[atk])
         attack_raw = extract_features_for_medium_ae(df)[:seq_len]
         strategy = random.choice(["fragmented", "stretched", "ramped", "hybrid", "spike"])
 
